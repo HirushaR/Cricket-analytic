@@ -1,10 +1,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
 
+#read the file
 df = pd.read_csv('data/Men ODI Player Innings Stats - 21st Century.csv')
 
-
+#player name
 player_Name = 'JJ Roy'
 
 #rename the column
