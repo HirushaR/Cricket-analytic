@@ -40,20 +40,22 @@ df['team'] = df['Opposition'].apply(lambda x: get_Opponent(x))
 
 #get player score with each country
 teams = df.groupby('team')
-year =df.groupby('year')
+years =df.groupby('year')
 #get total
 team_score = df.groupby('team').sum()
 #get avarage
 avg_score = df.groupby('team').mean()
 #get  by year
 years_score = df.groupby('year').sum()
-
+avg_year =df.groupby('year').mean()
 
 
 ###################################### ploting ##################################################
 team = [team for team, df in teams]
+year = [year for year, df in years]
 
 #dual ploting
+#plot score with team and plot avarage with team
 fig, ax1 = plt.subplots()
 ax2 = ax1.twinx()
 
@@ -68,13 +70,23 @@ plt.show()
 
 
 #single ploting
-year = df['year'].unique()
+# plt.bar(year , years_score['score'])
+# plt.ylabel('scores')
+# plt.xlabel('Years')
+# plt.show()
 
-plt.bar(year , years_score['score'])
-plt.ylabel('scores')
-plt.xlabel('Years')
+# plot year score with year and year avarage with year
+fig2, axx1 = plt.subplots()
+axx2 = axx1.twinx()
+
+axx1.bar(year,years_score['score'],color='g')
+axx2.plot(year,avg_year,'b-')
+
+axx1.set_ylabel('Scores')
+axx1.set_xlabel('Year', color='g')
+axx2.set_ylabel('Average', color='b')
+axx1.set_xticklabels(year, rotation='vertical',size=5)
 plt.show()
-
 
 
 
