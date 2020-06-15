@@ -21,3 +21,16 @@ df2['score'] = df2['score'].astype('float')
 # print(df2.replace(r'\$-','0').astype(float))
 print(df2.groupby('Name',sort=False)['score'].sum().reset_index())
 
+
+
+
+
+
+
+
+
+
+
+
+
+

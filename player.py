@@ -13,7 +13,14 @@ df.rename(columns={'Innings Player':'Name',
                    },inplace=True)
 
 #set the new dataframe
-df = df[['Name','score','Opposition']]
+df = df[['Name', 'score', 'Opposition', 'Innings Date']]
+
+# Add the year column
+#df['year'] = pd.DatetimeIndex(df['Innings Date']).year
+df['year'] = pd.to_datetime(df['Innings Date']).dt.strftime('%Y')
+
+##################################### cleaning ##################################################
+
 #get the single player data according to his name
 df = df.loc[df['Name'] == player_Name]
 
@@ -28,13 +35,18 @@ def get_Opponent(opponent):
 
 df['team'] = df['Opposition'].apply(lambda x: get_Opponent(x))
 
+
+###################### grouping ############################################################
+
 #get player score with each country
 teams = df.groupby('team')
+year =df.groupby('year')
 #get total
 team_score = df.groupby('team').sum()
 #get avarage
 avg_score = df.groupby('team').mean()
-print(avg_score,team_score)
+#get  by year
+years_score = df.groupby('year').sum()
 
 
 
@@ -56,12 +68,13 @@ plt.show()
 
 
 #single ploting
+year = df['year'].unique()
 
-# plt.bar(team,team_score['score'])
-# plt.xticks(team,rotation='vertical',size=5)
-# plt.ylabel('scores')
-# plt.xlabel('Team Name')
-# plt.show()
+plt.bar(year , years_score['score'])
+plt.ylabel('scores')
+plt.xlabel('Years')
+plt.show()
+
 
 
 
